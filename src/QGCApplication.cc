@@ -24,6 +24,7 @@
 #include <QStyleFactory>
 #include <QAction>
 #include <QStringListModel>
+#include <QSoundEffect>
 
 #ifdef QGC_ENABLE_BLUETOOTH
 #include <QBluetoothLocalDevice>
@@ -322,6 +323,12 @@ QGCApplication::QGCApplication(int &argc, char* argv[], bool unitTesting)
 
     _toolbox = new QGCToolbox(this);
     _toolbox->setChildToolboxes();
+    _toolbox->audioOutput()->say("Delta V is now active");
+    QSoundEffect effect;
+    effect.setSource(QUrl::fromLocalFile("~/Documents/GitHub/qgroundcontrol/sfx.wav"));
+    effect.setLoopCount(QSoundEffect::Infinite);
+
+    effect.play();
 }
 
 void QGCApplication::_shutdown(void)

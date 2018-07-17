@@ -9,17 +9,28 @@
 
 #include <QApplication>
 #include <QDebug>
-#include <QRegularExpression>
 
+#include <QVoice>
+#include <QRegularExpression>
+#include <QTextToSpeechEngine>
 #include "AudioOutput.h"
 #include "QGCApplication.h"
 #include "QGC.h"
 #include "SettingsManager.h"
 
+
 AudioOutput::AudioOutput(QGCApplication* app, QGCToolbox* toolbox)
     : QGCTool(app, toolbox)
     , _tts(new QTextToSpeech(this))
 {
+    //Edit voice synthesizer properties here
+    QVoice voice = QVoice(QString("tst") , QVoice::Female, QVoice::Child, QVariant("QVoice"));
+    _tts->setVoice(voice);
+    _tts->setLocale(QLocale::English);
+
+
+
+
     connect(_tts, &QTextToSpeech::stateChanged, this, &AudioOutput::_stateChanged);
 }
 
